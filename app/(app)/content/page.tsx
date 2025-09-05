@@ -48,8 +48,37 @@ async function getContent() {
   }
 }
 
+async function getCategories() {
+  try {
+    // Fetch all categories from Payload's API
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'}/api/categories?sort=title&limit=10`, {
+      cache: 'no-store',
+      headers: {
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
+      }
+    })
+    
+    if (!response.ok) {
+      throw new Error('Failed to fetch categories')
+    }
+    
+    const data = await response.json()
+    console.log('Fetched categories:', data.docs) // Debug log
+    return data.docs || []
+  } catch (error) {
+    console.error('Error fetching categories:', error)
+    return []
+  }
+}
+
 export default async function ContentPage() {
-  const content = await getContent()
+  const [content, categories] = await Promise.all([
+    getContent(),
+    getCategories()
+  ])
+  
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-4xl mx-auto px-4 py-8">
@@ -144,12 +173,38 @@ export default async function ContentPage() {
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="mt-8 text-center">
-          <p className="text-sm text-gray-500">
-            This content is managed through Payload CMS. Visit the admin panel to make changes.
-          </p>
-        </div>
+        {/* Categories Section */}
+        {categories.length > 0 && (
+          <div className="mt-8">
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Categories</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {categories.map((category: any) => (
+                  <div
+                    key={category.id}
+                    className="bg-gray-50 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer"
+                  >
+                    {category.url && (
+                      <div className="mb-3">
+                        <img
+                          src={category.url}
+                          alt={category.title}
+                          className="w-full h-32 object-cover rounded-md"
+                        />
+                      </div>
+                    )}
+                    <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                      {category.title}
+                    </h3>
+                    <p className="text-sm text-gray-600">
+                      Slug: {category.slug}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )
