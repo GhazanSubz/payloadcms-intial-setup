@@ -18,7 +18,8 @@
     "payload": "^3.54.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "sharp": "^0.34.3"
+    "sharp": "^0.34.3",
+    "undici": "^6.21.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
