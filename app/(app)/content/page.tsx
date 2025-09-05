@@ -2,23 +2,7 @@
 const fallbackContent = {
   title: "Welcome to Our Content Page",
   body: `
-    <h2>About This Page</h2>
-    <p>This is a sample content page that demonstrates how content can be managed through Payload CMS. The content you see here is currently static dummy data, but it will soon be connected to our CMS.</p>
-    
-    <h3>Features</h3>
-    <ul>
-      <li>Rich text editing capabilities</li>
-      <li>Easy content management through the admin panel</li>
-      <li>Real-time updates on the frontend</li>
-      <li>SEO-friendly content structure</li>
-    </ul>
-    
-    <h3>Getting Started</h3>
-    <p>To edit this content, you can access the Payload CMS admin panel at <a href="/admin" class="text-blue-600 hover:text-blue-800 underline">/admin</a> and look for the "Content" collection.</p>
-    
-    <blockquote class="border-l-4 border-blue-500 pl-4 italic text-gray-700">
-      "Content is king, but context is the kingdom." - This content can be easily updated through our CMS!
-    </blockquote>
+    Go and edit this content from admin portal
   `,
   lastUpdated: "2024-01-15"
 }
@@ -100,7 +84,7 @@ export default async function ContentPage() {
           </div>
         </div>
 
-        {/* Content */}
+        
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
           <div className="prose prose-lg max-w-none">
             {content.body ? (
@@ -173,7 +157,7 @@ export default async function ContentPage() {
           </div>
         </div>
 
-        {/* Categories Section */}
+        
         {categories.length > 0 && (
           <div className="mt-8">
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
